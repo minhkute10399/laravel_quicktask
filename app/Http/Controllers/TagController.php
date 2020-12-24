@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Requests\TagRequest;
 use App\Models\Tag;
+use Session;
 
 class TagController extends Controller
 {
@@ -36,17 +38,13 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
+        Tag::create([
+            'name' => $request->name,
         ]);
 
-        $item = new Tag();
-        $item->name = $request->name;
-        $item->save();
-
-        return redirect()->route('tag.index');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -68,7 +66,7 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $item = Tag::find($id);
+        $item = Tag::findOrFail($id);
 
         return view('update_tag', [
             'item' => $item,
@@ -84,15 +82,10 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+        $item = Tag::findOrFail($id);
+        $item->update($request->all());
 
-        $item = Tag::find($id);
-        $item->name = $request->get('name');
-        $item->save();
-
-        return redirect()->route('tag.index');
+        return redirect()->route('tags.index');
     }
 
     /**
