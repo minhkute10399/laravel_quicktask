@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use Session;
 
 class PostController extends Controller
 {
@@ -38,21 +40,15 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
-
-        $item = new Post();
         Post::create([
             'name' => $request->name,
             'description' => $request->description,
-            'tag_id' => $request->tag_id
+            'tag_id' => $request->tag_id,
         ]);
 
-        return redirect()->route('post.index');
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -74,12 +70,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $item = Post::find($id);
+        $item = Post::findOrFail($id);
         $tags = Tag::all();
 
         return view('update_post', [
             'item' => $item,
-            'tag' => $tags,
+            'tags' => $tags,
         ]);
     }
 
@@ -90,20 +86,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-        ]);
+        $item = Post::findOrFail($id);
+        $item->update($request->all());
 
-        $item = Post::find($id);
-        $item->name = $request->get('name');
-        $item->description = $request->get('description');
-        $item->tag_id = $request->get('tag_id');
-        $item->save();
-
-        return redirect()->route('post.index');
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -116,6 +104,18 @@ class PostController extends Controller
     {
         $item = Post::findOrFail($id);
         $item->delete();
+
+        return redirect()->back();
+    }
+
+    public function changeLanguage(Request $request)
+    {
+        $lang = $request->language;
+
+        if ($lang != 'en' && $lang != 'vi') {
+            $lang = config('app.locale');
+        }
+        session()->put('language', $lang);
 
         return redirect()->back();
     }
