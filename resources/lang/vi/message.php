@@ -17,4 +17,11 @@ return [
     'vietnam' => 'Tiếng việt',
     'add' => 'Thêm mới',
     'update' => 'Cập nhật',
+    'login' => 'Đăng nhập',
+    'logout' => 'Đăng xuất',
+    'register' => 'Đăng ký',
+    'email' => 'Địa chỉ E-mail',
+    'password' => 'Mật khẩu',
+    'name' => 'Họ tên',
+    'confirm' => 'Nhập lại mật khẩu',
 ];

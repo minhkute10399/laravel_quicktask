@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,6 @@ Route::group(['middleware' => ['localization']], function () {
     Route::resource('tags', 'TagController');
 });
 Route::get('change-languages/{language}', 'PostController@changeLanguage')->name('change-languages');
+
+Auth::routes();
+
