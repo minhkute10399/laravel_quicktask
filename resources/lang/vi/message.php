@@ -24,4 +24,5 @@ return [
     'password' => 'Mật khẩu',
     'name' => 'Họ tên',
     'confirm' => 'Nhập lại mật khẩu',
+    'language' => 'Ngôn ngữ',
 ];

@@ -24,4 +24,5 @@ return [
     'password' => 'Password',
     'name' => 'Name',
     'confirm' => 'Confirm password',
+    'language' => 'Language',
 ];
