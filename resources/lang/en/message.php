@@ -17,4 +17,11 @@ return [
     'vietnam' => 'Vietnam',
     'add' => 'Add',
     'update' => 'Update',
+    'login' => 'Login',
+    'logout' => 'Log out',
+    'register' => 'Register',
+    'email' => 'E-Mail Address',
+    'password' => 'Password',
+    'name' => 'Name',
+    'confirm' => 'Confirm password',
 ];
